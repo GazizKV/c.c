@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	printf("[DEBAG] buffer @ %p: \'%\'\n", buffer, buffer);
 	printf("[DEBAG] datafile @ %p: \'%s\'\n", datafile, datafile);
 
-	strncat(buffer, argv[1]);	// add new line to end
+	strncat(buffer, "\n", 1);	// add new line to end
 
 // open the file
 	fd = open(datafile, O_WRONLY|O_CREAT|O_APPEND, S_IRUSR|S_IWUSR);
@@ -46,9 +46,9 @@ free(datafile);
 }
 
 // function display message about mistake and end programm
-void fatal(char *mesage)
+void fatal(char *message)
 {
-	char error_meddahe[100];
+	char error_message[100];
 
 	strcpy(error_message, "[!!] critical mistake");
 	strncat(error_message, message, 83);
