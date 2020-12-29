@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 int check(int argc, char **argv)
@@ -8,32 +9,29 @@ int check(int argc, char **argv)
 		printf("You are not pass the argument");
 		return 1;
 	}
-	if ((argv[0]&& argv[9])!="\"")
+	if ((*argv[0] != "\"" && *argv[10])!="\"")
 	{
 		printf("You are pass the argument in a wrong way");
 		return 1;
 	}
 }
 
-int main(int argc, char** argv[]){
+void printing(char **argv)
+{
+	printf(strlen(argv);
+	for (int i=0; i < strlen(argv); i++)
+	{
+		printf(*argv[i]);
+	}
+}
+
+int main(int argc, char* argv[]){
+	printing(argv);
 	if (check(argc, argv)) return 0;
 	int ** sudoku;
 
-	for(int i=0;i<9;i++)
-	{
-		for(int j=0;j<0;j++)
-		{
-			fscanf(f, "%s", &sudo[i][j]);
-			printf("%s", &sudo[i][j]);
-		}
-	}
-	for(int i=0;i<9;i++)
-		for(int j=0;j<0;j++)
-			printf("%s\n", &sudo[i][j]);
+	printf("%s", *argv);
 	
-
-	
-
 
 	return 0;
 }
