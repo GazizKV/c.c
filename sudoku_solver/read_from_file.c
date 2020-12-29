@@ -2,12 +2,17 @@
 #include <stdlib.h>
 
 int main(int argc, char* argv[]){
-	FILE * f;
-	f=fopen("sudoku","r");
-	printf("%s\n",f);
-	char ** sudo;
+	FILE *fsudoku;
+	fsudoku=fopen("sudoku","r");
+	char ** sudoku;
+	
+	if (fsudoku == 0) {
+		printf("Cannot open file\n");
+		exit(1);
+	}
 
-	for(int i=0;i<9;i++)
+	while (fgets
+	/*for(int i=0;i<9;i++)
 	{
 		for(int j=0;j<0;j++)
 		{
@@ -18,7 +23,7 @@ int main(int argc, char* argv[]){
 	for(int i=0;i<9;i++)
 		for(int j=0;j<0;j++)
 			printf("%s\n", &sudo[i][j]);
-	
+*/	
 
 	
 
