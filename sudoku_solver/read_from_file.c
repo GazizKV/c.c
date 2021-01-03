@@ -3,24 +3,41 @@
 
 int main(int argc, char* argv[]){
 	FILE *fsudoku;
-	char *sudoku;
+	char **sudoku;
 	int i;
 
-	printf("16ths line");
+	sudoku = (char **)calloc (100, sizeof(char*));
+	if ( sudoku==NULL) {
+		printf("Can not allocating memory\n");
+		exit (1);
+	}
+	printf("14ths line\n");
 
 	fsudoku=fopen("sudoku","r");
 
-	printf("16ths line");
+	printf("18ths line\n");
 
 	if (fsudoku == 0) {
 		printf("Cannot open file\n");
 		exit(1);
 	}
 
-	printf("16ths line");
+	printf("25ths line\n");
 	i = 0;
-	fgets(sudoku, 10, fsudoku);
-	printf("%s", sudoku);
+	for(i;i<10;i++)
+	{
+		if (fgets(*sudoku, 10, fsudoku) != NULL ) 
+		{
+			printf("%s\n", *sudoku);
+			*sudoku++;
+		}
+		else
+		{
+			printf("can not read from file on line %d\n", i);
+			exit (1);
+		}
+	}
+	printf("32ths line\n");
 	printf("\n");
 	fclose(fsudoku);
 	
