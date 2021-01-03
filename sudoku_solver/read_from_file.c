@@ -24,6 +24,12 @@ int main(int argc, char* argv[]){
 
 	printf("25ths line\n");
 	i = 0;
+	//
+	//that not earn any string
+	//at the first need print the 2d array and then tray to read from file
+	//
+	//
+	//
 	for(i;i<10;i++)
 	{
 		if (fgets(*sudoku, 10, fsudoku) != NULL ) 
