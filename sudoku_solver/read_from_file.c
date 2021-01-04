@@ -24,9 +24,8 @@ int main(int argc, char* argv[]){
 
 	printf("25ths line\n");
 	i = 0;
-	//
-	//that not earn any string
-	//at the first need print the 2d array and then tray to read from file
+	// need to read example from the cppreference.com "fread"
+	//`
 	//
 	//
 	//
@@ -46,6 +45,7 @@ int main(int argc, char* argv[]){
 	printf("32ths line\n");
 	printf("\n");
 	fclose(fsudoku);
+	free(sudoku);
 	
 
 
