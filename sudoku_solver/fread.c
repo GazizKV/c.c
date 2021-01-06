@@ -1,43 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char* argv[]){
-	FILE *fsudoku;
-	char **sudoku;
-	int i;
-
-	sudoku = (char **)calloc (10, sizeof(char*));
-	for(int i=0;i<10;i++)
-		sudoku[i] = (char *)calloc (10, sizeof(char));
+char** allocating_memory(FILE *fd_sudoku) {
+	char **sudoku = (char**)calloc(9, sizeof(char));
+	for(int i=0;i<9;i++)
+	{
+		sudoku[i] = (char *)calloc(11, sizeof(char));
+		printf("%ls", &i);
+	}
 	if ( sudoku==NULL) {
 		printf("Can not allocating memory\n");
 		exit (1);
 	}
-	printf("14ths line\n");
+	printf("Memory allocating\n");
+	return sudoku;
+}
 
-	fsudoku=fopen("sudoku","r");
-
-	printf("18ths line\n");
-
-	if (fsudoku == 0) {
+FILE *open_pruv_file(char *file_name) {
+	FILE *fd_sudoku;
+	fd_sudoku=fopen(file_name, "r");
+	if (fd_sudoku == 0) {
 		printf("Cannot open file\n");
 		exit(1);
 	}
+	puts("File open by file stream name fd_sudoku\n");
+	return fd_sudoku;
+}
 
-	printf("25ths line\n");
+char **read_file_to_sudoku(char **sudoku, FILE *fd_sudoku) {
+	int i;
+
 	i = 0;
-	while (fgets(*sudoku, 11, fsudoku) != NULL) {
-		printf("%s\n", *sudoku);
-		*sudoku++;
+	while (fgets(*sudoku, 11, fd_sudoku) != NULL) {
+		printf("%s", *sudoku++);
 	}
-	if (feof(fsudoku))
+	puts("\n");
+	if (feof(fd_sudoku))
 		puts("End of file reached");
-	printf("32ths line\n");
-	printf("\n");
-	fclose(fsudoku);
-	free(sudoku);
-	
+	printf("File readed to char **sudoku\n\n");
+	fclose(fd_sudoku);
+	return sudoku;
+}
 
+int main(int argc, char* argv[]){
+	FILE *fd_sudoku;
+	char **sudoku;
+	int i, j;
+
+	sudoku = allocating_memory(fd_sudoku);
+	fd_sudoku = open_pruv_file("sudoku");
+	sudoku = read_file_to_sudoku(sudoku, fd_sudoku);
+
+	i=0;
+	j=0;
+	printf("%d", **sudoku);
+	puts("aaaa");
+	for(i=0;i<9;i++) {
+		j=0;
+		for(j=0;j<11;j++) {
+		putchar(sudoku[i][j]);
+		}
+	}
+	puts("end the programm");
 
 	return 0;
 }
