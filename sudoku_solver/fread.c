@@ -2,10 +2,10 @@
 #include <stdlib.h>
 
 char** allocating_memory(FILE *fd_sudoku) {
-	char **sudoku = (char**)calloc(9, sizeof(char));
+	char **sudoku = calloc(9, sizeof(char*));
 	for(int i=0;i<9;i++)
 	{
-		sudoku[i] = (char *)calloc(11, sizeof(char));
+		sudoku[i] = calloc(11, sizeof(char));
 		printf("%ls", &i);
 	}
 	if ( sudoku==NULL) {
@@ -49,11 +49,11 @@ int main(int argc, char* argv[]){
 
 	sudoku = allocating_memory(fd_sudoku);
 	fd_sudoku = open_pruv_file("sudoku");
-	sudoku = read_file_to_sudoku(sudoku, fd_sudoku);
+	read_file_to_sudoku(sudoku, fd_sudoku);
 
 	i=0;
 	j=0;
-	printf("%d", **sudoku);
+	printf("%s", *sudoku);
 	puts("aaaa");
 	for(i=0;i<9;i++) {
 		j=0;
@@ -61,6 +61,9 @@ int main(int argc, char* argv[]){
 		putchar(sudoku[i][j]);
 		}
 	}
+	free(sudoku);
+	for(i=0;i<9;i++)
+		free(*sudoku++);
 	puts("end the programm");
 
 	return 0;
