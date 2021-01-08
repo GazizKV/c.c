@@ -42,29 +42,32 @@ char **read_file_to_sudoku(char **sudoku, FILE *fd_sudoku) {
 	return sudoku;
 }
 
-int main(int argc, char* argv[]){
-	FILE *fd_sudoku;
-	char **sudoku;
-	int i, j;
-
-	sudoku = allocating_memory(fd_sudoku);
-	fd_sudoku = open_pruv_file("sudoku");
-	read_file_to_sudoku(sudoku, fd_sudoku);
-
-	i=0;
-	j=0;
-	printf("%s", *sudoku);
-	puts("aaaa");
-	for(i=0;i<9;i++) {
+void solve_sudoku(char **sudoku) {
+	int j;
+	for(int i=0;i<9;i++) {
 		j=0;
 		for(j=0;j<11;j++) {
 		putchar(sudoku[i][j]);
 		}
 	}
+}
+
+void freeing_memory(char **sudoku) {
 	free(sudoku);
-	for(i=0;i<9;i++)
+	for(int i=0;i<9;i++)
 		free(*sudoku++);
-	puts("end the programm");
+	puts("Memory for char  **sudoku feeed && end the programm");
+}
+
+int main(int argc, char* argv[]){
+	FILE *fd_sudoku;
+	char **sudoku;
+
+	sudoku = allocating_memory(fd_sudoku);
+	fd_sudoku = open_pruv_file("sudoku");
+	read_file_to_sudoku(sudoku, fd_sudoku);
+	solve_sudoku(sudoku);
+	freeing_memory(sudoku);
 
 	return 0;
 }
