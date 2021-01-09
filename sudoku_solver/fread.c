@@ -42,13 +42,32 @@ char **read_file_to_sudoku(char **sudoku, FILE *fd_sudoku) {
 	return sudoku;
 }
 
+int get_suit_valu(int x, int y, sudoku) {
+	char *digits_array = "123456789";
+	int i, j;
+
+	j=x;
+	j=y;
+	for(i=0;i<9;i++) {
+		if(i==x && j==y)
+			continue;
+		
+			
+}
+
 void solve_sudoku(char **sudoku) {
+	int digit;
 	int j;
+
+	digit = 0;
 	for(int i=0;i<9;i++) {
 		j=0;
 		for(j=0;j<11;j++) {
 		putchar(sudoku[i][j]);
-		}
+		if (sudoku[i][j] == "-")
+			continue;
+		digit = get_suit_valu(i, j, sudoku);
+		sudoku[i][j] = digit; 	
 	}
 }
 
@@ -56,7 +75,7 @@ void freeing_memory(char **sudoku) {
 	free(sudoku);
 	for(int i=0;i<9;i++)
 		free(*sudoku++);
-	puts("Memory for char  **sudoku feeed && end the programm");
+	puts("Memory for char  **sudoku freed && end the programm");
 }
 
 int main(int argc, char* argv[]){
