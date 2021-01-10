@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
 char** allocating_memory(FILE *fd_sudoku) {
 	char **sudoku = calloc(9, sizeof(char*));
@@ -42,32 +44,39 @@ char **read_file_to_sudoku(char **sudoku, FILE *fd_sudoku) {
 	return sudoku;
 }
 
-int get_suit_valu(int x, int y, sudoku) {
-	char *digits_array = "123456789";
+char *get_suit_valu(int x, int y, char **sudoku) {
+	char *charPointerToDigits_array = "123456789";
 	int i, j;
+	char *result = "-";
+	char *horisontal;
+	char *vertical;
+	char *square;
 
-	j=x;
+	i=x;
 	j=y;
 	for(i=0;i<9;i++) {
-		if(i==x && j==y)
+		if((i==x && j==y)||(&sudoku[i][j]=="-"))
 			continue;
 		
-			
+	}
+	printf("%s", result);
+	return result;
+	
 }
 
 void solve_sudoku(char **sudoku) {
-	int digit;
+	char *charPointerToDigit;
 	int j;
 
-	digit = 0;
 	for(int i=0;i<9;i++) {
 		j=0;
 		for(j=0;j<11;j++) {
-		putchar(sudoku[i][j]);
-		if (sudoku[i][j] == "-")
-			continue;
-		digit = get_suit_valu(i, j, sudoku);
-		sudoku[i][j] = digit; 	
+			//putchar(sudoku[i][j]);
+			if (&sudoku[i][j] == "-")
+				continue;
+			charPointerToDigit = get_suit_valu(i, j, sudoku);
+			sudoku[i][j] = *charPointerToDigit; 	
+		}
 	}
 }
 
