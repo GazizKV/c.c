@@ -6,7 +6,7 @@ TARGET = solver
 solver: fread.c
 	gcc -o $(TARGET) fread.c
 clean:
-	rm -rf solver *.o *~
+	rm -rf solver *.o *~ a.out
 install:
 	install $(TARGET) $(PREFIX)
 uninstall:

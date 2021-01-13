@@ -67,16 +67,18 @@ char *get_suit_valu(int x, int y, char **sudoku) {
 void solve_sudoku(char **sudoku) {
 	char *charPointerToDigit;
 	int j;
+	char *hephen = "-";
 
 	for(int i=0;i<9;i++) {
 		j=0;
-		for(j=0;j<11;j++) {
+		for(j=0;j<9;j++) {
 			//putchar(sudoku[i][j]);
-			if (&sudoku[i][j] == "-")
+			if (sudoku[i][j] != *hephen)
 				continue;
 			charPointerToDigit = get_suit_valu(i, j, sudoku);
 			sudoku[i][j] = *charPointerToDigit; 	
 		}
+		puts("\n");
 	}
 }
 
