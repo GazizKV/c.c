@@ -48,9 +48,8 @@ char *get_suit_valu(int x, int y, char **sudoku) {
 	char *charPointerToDigits_array = "123456789";
 	int i, j;
 	char *result = "-";
-	char *horisontal;
-	char *vertical;
-	char *square;
+	char *arrayOfFitable;
+	arrayOfFitable = calloc(9, sizeof(char*));
 
 	i=x;
 	j=y;
@@ -60,6 +59,7 @@ char *get_suit_valu(int x, int y, char **sudoku) {
 		
 	}
 	printf("%s", result);
+	free(arrayOfFitable);
 	return result;
 	
 }
