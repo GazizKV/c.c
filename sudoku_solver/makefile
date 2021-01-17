@@ -3,8 +3,8 @@ TARGET = solver
 
 .PHONY: all clean install uninstall
 
-solver: fread.c
-	gcc -o $(TARGET) fread.c
+solver: solver.c
+	gcc -o $(TARGET) solver.c
 clean:
 	rm -rf solver *.o *~ a.out
 install:

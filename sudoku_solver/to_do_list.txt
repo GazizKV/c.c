@@ -1,0 +1,3 @@
+to get value from 3 arrays
+copair and output 1 fit digit that have not equalities and hove not any the
+same equlities from other digit in range 1-9.

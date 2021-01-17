@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
@@ -44,41 +45,86 @@ char **read_file_to_sudoku(char **sudoku, FILE *fd_sudoku) {
 	return sudoku;
 }
 
+int chek_horisontal(char digit, char **sudoku, int x) {
+	int result = 0;
+	for(int i=0;i<9;i++) {
+		if(digit==sudoku[x][i]) result=1;
+	}
+	return result;
+}
+
+int chek_vertikal(char digit, char **sudoku, int y) {
+	int result = 0;
+	for(int i=0;i<9;i++) {
+		if(digit==sudoku[i][y]) result=1;
+	}
+	return result;
+}
+
+int chek_square(char digit, char **sudoku, int x, int y) {
+	int result = 0;
+	int fromX = x/3*3;
+	int fromY = y/3*3;
+
+	for(int i=fromX;i<fromX+3;i++) {
+		for(int j=fromY;j<fromY+3;j++) {
+			if(digit==sudoku[i][j])
+				result=1;
+		}
+	}
+	return result;
+}
+
+bool chek_the_same(int x, int y, char **sudoku, char *charPointerToDigits_array) {
+	bool fit = true;
+	int fittable_counter = 0;
+
+	for (int i=0;i<9;i++) {
+		fittable_counter += chek_horisontal(charPointerToDigits_array[i], sudoku, x);
+		fittable_counter += chek_vertikal(charPointerToDigits_array[i], sudoku, y);
+		fittable_counter += chek_square(charPointerToDigits_array[i], sudoku, x, y);
+	}
+	//printf("%d_", fittable_counter);
+	if(fittable_counter!=0)
+		fit = false;
+	return fit;
+}
+
+char *getValueOfFit(int x, int y, char **sudoku, char *charPointerTodigits_array) {
+	return "0";
+}
+
 char *get_suit_valu(int x, int y, char **sudoku) {
 	char *charPointerToDigits_array = "123456789";
 	int i, j;
 	char *result = "-";
 	char *arrayOfFitable;
+	int fittable_counter = 0;
 	arrayOfFitable = calloc(9, sizeof(char*));
-
-	i=x;
-	j=y;
-	for(i=0;i<9;i++) {
-		if((i==x && j==y)||(&sudoku[i][j]=="-"))
-			continue;
-		
+	if(chek_the_same(x, y, sudoku, charPointerToDigits_array)) {
+		result = getValueOfFit(x, y, sudoku, charPointerToDigits_array);
+	} else {
+		result = "-";
 	}
-	printf("%s", result);
+
 	free(arrayOfFitable);
+	//printf("%s", result);
 	return result;
 	
 }
 
 void solve_sudoku(char **sudoku) {
-	char *charPointerToDigit;
 	int j;
 	char *hephen = "-";
 
 	for(int i=0;i<9;i++) {
 		j=0;
 		for(j=0;j<9;j++) {
-			//putchar(sudoku[i][j]);
 			if (sudoku[i][j] != *hephen)
 				continue;
-			charPointerToDigit = get_suit_valu(i, j, sudoku);
-			sudoku[i][j] = *charPointerToDigit; 	
+			sudoku[i][j] = *get_suit_valu(i, j, sudoku);
 		}
-		puts("\n");
+		puts("*");
 	}
 }
 
