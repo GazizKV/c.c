@@ -3,3 +3,7 @@ compair and output 1 fit digit that have not equalities and hove not any the
 same equlities from other digit in range 1-9.
 
 added func to chec digit need to compare return's in range 1-9;
+
+18.01.2021.
+	need to chek chek funcoin's counter of fattable digit it not work
+correctly;

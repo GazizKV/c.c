@@ -4,6 +4,12 @@
 #include <stdlib.h>
 #include <math.h>
 
+void print_sudoku(char **sudoku) {
+	for(int i=0;i<9;i++) {
+		printf("%s", sudoku[i]);
+	}
+}
+
 char** allocating_memory(FILE *fd_sudoku) {
 	char **sudoku = calloc(9, sizeof(char*));
 	for(int i=0;i<9;i++)
@@ -84,9 +90,9 @@ bool chek_the_same(int x, int y, char **sudoku, char *charPointerToDigits_array)
 		fittable_counter += chek_vertikal(charPointerToDigits_array[i], sudoku, y);
 		fittable_counter += chek_square(charPointerToDigits_array[i], sudoku, x, y);
 	}
-	//printf("%d_", fittable_counter);
 	if(fittable_counter!=0)
 		fit = false;
+	printf("%d-%d ", fit, fittable_counter);
 	return fit;
 }
 
@@ -108,7 +114,6 @@ char *get_suit_valu(int x, int y, char **sudoku) {
 	}
 
 	free(arrayOfFitable);
-	//printf("%s", result);
 	return result;
 	
 }
@@ -124,14 +129,14 @@ void solve_sudoku(char **sudoku) {
 				continue;
 			sudoku[i][j] = *get_suit_valu(i, j, sudoku);
 		}
-		puts("*");
+		puts("\n");
 	}
 }
 
 void freeing_memory(char **sudoku) {
-	free(sudoku);
 	for(int i=0;i<9;i++)
-		free(*sudoku++);
+		free(sudoku[i]);
+	free(sudoku);
 	puts("Memory for char  **sudoku freed && end the programm");
 }
 
@@ -143,6 +148,7 @@ int main(int argc, char* argv[]){
 	fd_sudoku = open_pruv_file("sudoku");
 	read_file_to_sudoku(sudoku, fd_sudoku);
 	solve_sudoku(sudoku);
+	print_sudoku(sudoku);
 	freeing_memory(sudoku);
 
 	return 0;
