@@ -81,23 +81,27 @@ int chek_square(char digit, char **sudoku, int x, int y) {
 	return result;
 }
 
-bool chek_the_same(int x, int y, char **sudoku, char *charPointerToDigits_array) {
-	bool fit = true;
+bool haveItSolve(int x, int y, char **sudoku, char *charPointerToDigits_array) {
+	bool fit = false;
 	int fittable_counter = 0;
+	int inerCounter = 0;
 
 	for (int i=0;i<9;i++) {
+		fittable_counter=0;
 		fittable_counter += chek_horisontal(charPointerToDigits_array[i], sudoku, x);
 		fittable_counter += chek_vertikal(charPointerToDigits_array[i], sudoku, y);
 		fittable_counter += chek_square(charPointerToDigits_array[i], sudoku, x, y);
+		if(fittable_counter==0)
+			inerCounter++;
 	}
-	if(fittable_counter!=0)
-		fit = false;
-	printf("%d-%d ", fit, fittable_counter);
+	if(inerCounter==1)
+		fit = true;
+	printf("%d-%d-%d ", fit, fittable_counter, inerCounter);
 	return fit;
 }
 
 char *getValueOfFit(int x, int y, char **sudoku, char *charPointerTodigits_array) {
-	return "0";
+	return "-";
 }
 
 char *get_suit_valu(int x, int y, char **sudoku) {
@@ -105,9 +109,10 @@ char *get_suit_valu(int x, int y, char **sudoku) {
 	int i, j;
 	char *result = "-";
 	char *arrayOfFitable;
+
 	int fittable_counter = 0;
 	arrayOfFitable = calloc(9, sizeof(char*));
-	if(chek_the_same(x, y, sudoku, charPointerToDigits_array)) {
+	if(haveItSolve(x, y, sudoku, charPointerToDigits_array)) {
 		result = getValueOfFit(x, y, sudoku, charPointerToDigits_array);
 	} else {
 		result = "-";
