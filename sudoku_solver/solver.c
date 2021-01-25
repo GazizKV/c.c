@@ -81,39 +81,53 @@ int chek_square(char digit, char **sudoku, int x, int y) {
 	return result;
 }
 
-bool haveItSolve(int x, int y, char **sudoku, char *charPointerToDigits_array) {
+bool haveItSolve(int x, int y, char **sudoku, char *arrayOf123456789) {
 	bool fit = false;
 	int fittable_counter = 0;
 	int inerCounter = 0;
 
 	for (int i=0;i<9;i++) {
 		fittable_counter=0;
-		fittable_counter += chek_horisontal(charPointerToDigits_array[i], sudoku, x);
-		fittable_counter += chek_vertikal(charPointerToDigits_array[i], sudoku, y);
-		fittable_counter += chek_square(charPointerToDigits_array[i], sudoku, x, y);
+		fittable_counter += chek_horisontal(arrayOf123456789[i], sudoku, x);
+		fittable_counter += chek_vertikal(arrayOf123456789[i], sudoku, y);
+		fittable_counter += chek_square(arrayOf123456789[i], sudoku, x, y);
 		if(fittable_counter==0)
 			inerCounter++;
 	}
 	if(inerCounter==1)
 		fit = true;
-	printf("%d-%d-%d ", fit, fittable_counter, inerCounter);
+	printf("%d-%d ", fit, inerCounter);
 	return fit;
 }
 
-char *getValueOfFit(int x, int y, char **sudoku, char *charPointerTodigits_array) {
-	return "-";
+char *getValueOfFit(int x, int y, char **sudoku, char *arrayOf123456789) {
+	int fittable_counter = 0;
+	char *result;
+
+	result = "-";
+	for (int i=0;i<9;i++) {
+		fittable_counter=0;
+		fittable_counter += chek_horisontal(arrayOf123456789[i], sudoku, x);
+		fittable_counter += chek_vertikal(arrayOf123456789[i], sudoku, y);
+		fittable_counter += chek_square(arrayOf123456789[i], sudoku, x, y);
+		if(fittable_counter==0) {
+			result = &arrayOf123456789[i];
+			break;
+		}
+	}
+	return result;
 }
 
 char *get_suit_valu(int x, int y, char **sudoku) {
-	char *charPointerToDigits_array = "123456789";
+	char *arrayOf123456789 = "123456789";
 	int i, j;
 	char *result = "-";
 	char *arrayOfFitable;
 
 	int fittable_counter = 0;
 	arrayOfFitable = calloc(9, sizeof(char*));
-	if(haveItSolve(x, y, sudoku, charPointerToDigits_array)) {
-		result = getValueOfFit(x, y, sudoku, charPointerToDigits_array);
+	if(haveItSolve(x, y, sudoku, arrayOf123456789)) {
+		result = getValueOfFit(x, y, sudoku, arrayOf123456789);
 	} else {
 		result = "-";
 	}
@@ -123,7 +137,7 @@ char *get_suit_valu(int x, int y, char **sudoku) {
 	
 }
 
-void solve_sudoku(char **sudoku) {
+void solve(char **sudoku) {
 	int j;
 	char *hephen = "-";
 
@@ -135,6 +149,23 @@ void solve_sudoku(char **sudoku) {
 			sudoku[i][j] = *get_suit_valu(i, j, sudoku);
 		}
 		puts("\n");
+	}
+}
+
+bool nonSolved(char **sudoku) {
+	bool nonSolved = true;
+	for(int i=0;i<9;i++) {
+		for(int j=0;j<9;j++) {
+			if(&sudoku[i][j]=="-")
+				nonSolved = false;
+			}
+	}
+	return nonSolvedt;
+}
+
+void solve_sudoku(char **sudoku) {
+	while(nonSolved(sudoku)) {
+		solve(sudoku);
 	}
 }
 
