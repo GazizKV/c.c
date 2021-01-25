@@ -152,23 +152,6 @@ void solve(char **sudoku) {
 	}
 }
 
-bool nonSolved(char **sudoku) {
-	bool nonSolved = true;
-	for(int i=0;i<9;i++) {
-		for(int j=0;j<9;j++) {
-			if(&sudoku[i][j]=="-")
-				nonSolved = false;
-			}
-	}
-	return nonSolvedt;
-}
-
-void solve_sudoku(char **sudoku) {
-	while(nonSolved(sudoku)) {
-		solve(sudoku);
-	}
-}
-
 void freeing_memory(char **sudoku) {
 	for(int i=0;i<9;i++)
 		free(sudoku[i]);
@@ -183,7 +166,8 @@ int main(int argc, char* argv[]){
 	sudoku = allocating_memory(fd_sudoku);
 	fd_sudoku = open_pruv_file("sudoku");
 	read_file_to_sudoku(sudoku, fd_sudoku);
-	solve_sudoku(sudoku);
+	for(int i=0;i<9;i++)
+		solve(sudoku);
 	print_sudoku(sudoku);
 	freeing_memory(sudoku);
 
