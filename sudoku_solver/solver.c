@@ -162,13 +162,19 @@ void freeing_memory(char **sudoku) {
 int main(int argc, char* argv[]){
 	FILE *fd_sudoku;
 	char **sudoku;
+	int trigger;
 
 	sudoku = allocating_memory(fd_sudoku);
 	fd_sudoku = open_pruv_file("sudoku");
 	read_file_to_sudoku(sudoku, fd_sudoku);
-	for(int i=0;i<9;i++)
+	while(true) {
+		print_sudoku(sudoku);
 		solve(sudoku);
-	print_sudoku(sudoku);
+		scanf("%d", &trigger);
+		if(trigger)
+			break;
+
+	}
 	freeing_memory(sudoku);
 
 	return 0;
